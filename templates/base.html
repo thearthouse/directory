@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+<script>
+  function bits_randint(min,max){
+    function getrandbits(k) {
+        var numbits = new Array(k).fill(1).map(x => (Math.random() >= .5) ? 1 : 0).join('');
+        return BigInt("0b"+numbits);
+    }
+    var bigwidth = max-min;
+    var klen = bigwidth.toString(2).length;
+    var r = getrandbits(klen);
+    while (r >= bigwidth){
+        r = getrandbits(klen);
+    }
+    return min+r;
+}
+
+var rend = bits_randint(BigInt(1),BigInt("904625697166532776746648320380374280100293470930272690489102837043110636675"));
+//document.getElementById("bnjs").href = "./"+rend.toString();
+      (function() {
+    'use strict';
+
+var z;
+var interval = setInterval(function(){
+  z=((document.body.innerHTML).toString().match(new RegExp("(0 tx)", "g")) || []).length-3;
+   // if (z > 384){
+     document.getElementById("rsltn1").innerHTML ="T:"+z;
+     if (z > 384){
+        //location.replace("./rnd");
+        //document.getElementById("nextpp").click();
+        //document.getElementById("prevpp").click();
+       // document.getElementById("popp").click();
+        clearInterval(interval);
+    }
+    console.log(z);
+}, 300);
+
+})();
+</script>
+  
+
+</body>
+</html>

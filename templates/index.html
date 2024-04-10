@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Directory</title>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <script>
+            function tronbal(el) {
+                var gid = el.getAttribute('data-typeId');
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        var json = JSON.parse(this.responseText);
+                        var f = json["totalTransactionCount"];
+                        if (f > 0){
+                        document.getElementById(gid).innerHTML ='<span style="color:red">'+f+'</span>';
+                        //alert("yeah");
+                        document.getElementById("rsltn").innerHTML =document.getElementById("rsltn").innerHTML +f;
+                        }else{
+                        document.getElementById(gid).innerHTML ="(0 tx)";
+                        }
+                   }else{
+                        tronbal(el);
+                   }
+                  // tronbal(el);
+                }
+                };
+                xhttp.open("GET", "https://apilist.tronscan.org/api/account?address="+gid, true);
+                xhttp.send();
+            }
+            function btcbal(el) {
+                var gid = el.getAttribute('data-typeId');
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            var json = this.responseText;
+                            var f = json;
+                            if (f > 0){
+                            document.getElementById(gid).innerHTML ='<span style="color:red">'+f+'</span>';
+                            document.getElementById("rsltn").innerHTML =document.getElementById("rsltn").innerHTML +f;
+                            }else{
+                            document.getElementById(gid).innerHTML ="(0 tx)";
+                            }
+                       }else{
+                            btcbal(el);
+                       }
+                      // btcbal(el);
+                    }
+                };
+                xhttp.open("GET", "https://blockchain.info/q/getreceivedbyaddress/"+gid, true);
+                xhttp.send();
+            }
+            function dogebal(el) {
+                var gid = el.getAttribute('data-typeId');
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            var json = this.responseText;
+                            var f = json;
+                            if (f > 0){
+                            document.getElementById(gid).innerHTML ='<span style="color:red">'+f+'</span>';
+                            document.getElementById("rsltn").innerHTML =document.getElementById("rsltn").innerHTML +f;
+                            }else{
+                            document.getElementById(gid).innerHTML ="(0 tx)";
+                            }
+                       }else{
+                           dogebal(el);
+                       }
+                       //dogebal(el);
+                   }
+                };
+                xhttp.open("GET", "./dogeapi/"+gid, true);
+                xhttp.send();
+            }
+        </script>
+        <div class="my-4">
+           <div class="flex justify-between items-center max-w-sm mx-auto">
+              <a title="First page" class="text-black " href="/1">
+                 <span class="inline-block w-6 rotate-180">
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                       <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"></path>
+                    </svg>
+                 </span>
+              </a>
+              <a title="Previous page" id="prevpp" class="text-black " rel="nofollow" href="/{{ prevp }}">
+                 <span class="inline-block w-4 rotate-180">
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                       <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                    </svg>
+                 </span>
+              </a>
+              <a title="Pop page" id="popp" class="text-black " rel="nofollow" href="/{{ popp }}">
+                 <span class="inline-block w-6">
+                    <img src="https://www.svgrepo.com/show/364149/arrow-circle-left-fill.svg" style="
+    /* height: 36px; */
+    /* width: 36px; */
+    margin: auto;
+    margin-top: 5px;
+">
+                 </span>
+              </a>
+              <a title="Random page" class="text-black" rel="nofollow" href="/rnd" id = "bobo">
+                 <span class="inline-block w-8">
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                       <path fill="currentColor" d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"></path>
+                    </svg>
+                 </span>
+              </a>
+<a title="Random page js" class="text-black" rel="nofollow" id="bnjs" href="/rnd">
+                 <span class="inline-block w-8">
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 512">
+                       <path fill="currentColor" d="M592 192H473.26c12.69 29.59 7.12 65.2-17 89.32L320 417.58V464c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48V240c0-26.51-21.49-48-48-48zM480 376c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm-46.37-186.7L258.7 14.37c-19.16-19.16-50.23-19.16-69.39 0L14.37 189.3c-19.16 19.16-19.16 50.23 0 69.39L189.3 433.63c19.16 19.16 50.23 19.16 69.39 0L433.63 258.7c19.16-19.17 19.16-50.24 0-69.4zM96 248c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm0-128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24zm128 128c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"></path>
+                    </svg>
+                 </span>
+              </a>
+              <a title="Next page" id="nextpp" class="text-black " rel="nofollow" href="/{{ nextp }}">
+                 <span class="inline-block w-4">
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                       <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                    </svg>
+                 </span>
+              </a>
+              <a title="Last page" class="text-black " href="/904625697166532776746648320380374280100293470930272690489102837043110636675">
+                 <span class="inline-block w-6">
+                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                       <path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"></path>
+                    </svg>
+                 </span>
+              </a>
+           </div>
+           <div id="rsltn">0</div><br>
+           <div id="rsltn1">0</div>
+        </div>    
+        {% if tasks|length < 1 %}
+            <h4 style="text-align: center">uuups!</h4>
+        {% else %}
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Trx</th>
+                    <th>Btc(C)</th>
+                    <th>Doge(C)</th>
+                    <th>Trx-Bal</th>
+                    <th>Btc-Bal</th>
+                    <th>Doge-Bal</th>
+                </tr>
+                {% for kiy, value in tasks.items() %}
+                    <tr>
+                        <td><a href="./key/{{ value.key }}" target="_blank">+</a></td>
+                        <td><a href="https://tronscan.org/#/address/{{ value.tron }}" target="_blank">{{ value.tron }}</a></td>
+                        <td>{{ value.btc }}</td>
+                        <td>{{ value.doge }}</td>
+                        <td id="{{ value.tron }}"><img data-typeId="{{ value.tron }}" src="{{ url_for('static', filename='loader.png') }}" onload="tronbal(this)" width="0" height="0">{{ value.tron_bal }}</td>
+                        <td id="{{ value.btc }}"><img data-typeId="{{ value.btc }}" src="{{ url_for('static', filename='loader.png') }}" onload="btcbal(this)" width="0" height="0">{{ value.btc_bal }}</td>
+                        <td id="{{ value.doge }}"><img data-typeId="{{ value.doge }}" src="{{ url_for('static', filename='loader.png') }}" onload="dogebal(this)" width="0" height="0">{{ value.doge_bal }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+          <center><a href="https://replit.com/@MrAta/Directory">source</a></center>
+    </div>
+
+{% endblock %}
